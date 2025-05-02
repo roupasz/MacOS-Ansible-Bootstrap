@@ -3,11 +3,24 @@
 > I'm sure that many aspects of this repository can be done in a better, more intelligent way. If you have suggestions or enhancements, please feel free to open a PR!<br>
 > Tested with: Ansible v2.18.4 & macOS Sequoia 15
 
+- [📝 Overview](#-overview)
+- [🚀 New System Bootstrap](#-new-system-bootstrap)
+  - [🖥️ Bootstrap Script Usage](#️-bootstrap-script-usage)
+    - [Order of role execution](#order-of-role-execution)
+  - [📦 Ansible Playbook Usage](#-ansible-playbook-usage)
+    - [New role creation](#new-role-creation)
+- [🛡️ Security](#️-security)
+- [⚙️ Customization](#️-customization)
+- [🐞 Issues / 📝 TODOs](#-issues---todos)
+- [🤝 Contributing](#-contributing)
+- [🔗 Connect with me](#-connect-with-me)
+- [🧑‍💻 About Me](#-about-me)
+
 # 📝 Overview
 
 A collection of ansible roles which install macOS related packages,dependencies, plugins, fonts and system settings.
 
-> [!IMPORTANT] 
+> [!NOTE] 
 > Add a diagram flow
 
 # 🚀 New System Bootstrap
@@ -88,3 +101,16 @@ For more customization details, check README files found in each role (wip).
 # 🤝 Contributing
 
 Contributions and suggestions are welcome! If you spot something that could be improved (and I'm sure you'll find a lot :) ), please open an issue or submit a pull request.
+
+# 🔗 Connect with me
+
+<a href="https://linkedin.com/in/roupasz" target="blank"><img align="center" src="./src/images/icons/social/linked-in.svg" alt="roupasz" height="30" width="40" /></a>
+<a href="https://instagram.com/paparoup_" target="blank"><img align="center" src="./src/images/icons/social/instagram.svg" alt="roupasz" height="30" width="40" /></a>
+
+# 🧑‍💻 About Me
+
+<a href="https://zoisroupas.dev/" target="blank">
+<img src="https://img.shields.io/website?url=https%3A%2F%2zoisroupas.dev%2F&logo=github&style=flat-square" />
+</a>
+I'm a DevOps Engineer specializing in hybrid infrastructure architecture and implementation. I design, deploy, and optimize systems across both on-premise environments and cloud platforms, focusing on automation, CI/CD pipelines, and infrastructure as code to create scalable, resilient solutions.
+[Check out my Blog ✍️](https://myhomelab.gr/)
