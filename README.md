@@ -13,7 +13,7 @@
 - [⚙️ Customization](#️-customization)
 - [🐞 Issues / 📝 TODOs](#-issues---todos)
 - [🤝 Contributing](#-contributing)
-- [🔗 Connect with me](#-connect-with-me)
+- [🔗 Connect](#-connect)
 - [🧑‍💻 About Me](#-about-me)
 
 ## 📝 Overview
@@ -102,7 +102,7 @@ For more customization details, check README files found in each role (wip).
 
 Contributions and suggestions are welcome! If you spot something that could be improved (and I'm sure you'll find a lot :) ), please open an issue or submit a pull request.
 
-## 🔗 Connect with me
+## 🔗 Connect
 
 <p align="left">
 <a href="https://linkedin.com/in/roupasz" target="blank"><img align="center" src="./src/images/icons/social/linked-in.svg" alt="roupasz" height="30" width="40" /></a>
@@ -114,4 +114,4 @@ Contributions and suggestions are welcome! If you spot something that could be i
 <img src="https://img.shields.io/website?url=https%3A%2F%2Fzoisroupas.dev%2F&logo=github&style=flat-square" />
 </a><br>
 I'm a DevOps Engineer specializing in hybrid infrastructure architecture and implementation. I design, deploy, and optimize systems across both on-premise environments and cloud platforms, focusing on automation, CI/CD pipelines, and infrastructure as code to create scalable, resilient solutions.<br>
-[Check out my Blog ✍️](https://myhomelab.gr/)
+✍️[Check out my Blog](https://myhomelab.gr/)
