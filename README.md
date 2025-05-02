@@ -112,6 +112,8 @@ Contributions and suggestions are welcome! If you spot something that could be i
 
 <a href="https://zoisroupas.dev/" target="_blank">
 <img src="https://img.shields.io/website?url=https%3A%2F%2Fzoisroupas.dev%2F&logo=github&style=flat-square" />
-</a><br>
-I'm a DevOps Engineer specializing in hybrid infrastructure architecture and implementation. I design, deploy, and optimize systems across both on-premise environments and cloud platforms, focusing on automation, CI/CD pipelines, and infrastructure as code to create scalable, resilient solutions.<br>
+</a>
+
+I'm a DevOps Engineer specializing in hybrid infrastructure architecture and implementation. I design, deploy, and optimize systems across both on-premise environments and cloud platforms, focusing on automation, CI/CD pipelines, and infrastructure as code to create scalable, resilient solutions.
+
 [Check out my Blog](https://myhomelab.gr/)
