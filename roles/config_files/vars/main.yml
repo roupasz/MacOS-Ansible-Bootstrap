@@ -1,0 +1,7 @@
+---
+# vars file for gpg_import
+
+# This is the name or ID of the Bitwarden item you want to retrieve.
+note_id_or_name: "<secure_note_name>"
+gitlab_repo_url: "https://github.com/<user>/repo.git"
+repo_dest: "{{ ansible_env.HOME }}/path/to/repo"

@@ -1,0 +1,7 @@
+---
+# vars file for modules
+
+python_modules:
+  - configparser
+  - pylint
+  - virtualenv

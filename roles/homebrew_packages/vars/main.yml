@@ -1,0 +1,64 @@
+---
+# vars/main.yml
+brew_cask_packages:
+  - gpg-suite
+  - bitwarden
+
+# packages for new installations
+brew_cask_bootsrap_packages:
+  - iterm2
+  - raycast
+  - firefox
+  - rectangle
+  - ente-auth
+
+brew_packages:
+  - zsh
+  - ripgrep
+  - pass
+  - sops
+  - sshuttle
+  - libressl
+  - git
+  - asciidoctor
+  - asciinema
+  - age
+  - mas
+  - transcrypt
+  - bitwarden-cli
+  - phoenix-slides
+  - jordanbaird-ice
+  - redis
+  - hwatch
+  - dust
+  - grip
+  - wget
+  - tree
+  - htop
+  - atuin
+  - fzf
+  - fd
+  - rg
+  - grepcidr
+  - stern
+  - neofetch
+  - fastfetch
+  - trex
+  - go
+  - jq
+  - bat
+  - eza
+  - python
+  - zsh
+  - zsh-syntax-highlighting
+  - sqlcmd
+  - onefetch
+  - kubectl
+  - kubectx
+  - azure-cli
+  - awscli
+  - hidetatz/tap/kubecolor
+  - diff-so-fancy
+  - homeport/tap/dyff
+  - derailed/k9s/k9s
+  - hashicorp/tap/terraform

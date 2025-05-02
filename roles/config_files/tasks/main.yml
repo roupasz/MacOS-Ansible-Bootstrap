@@ -1,0 +1,59 @@
+---
+# tasks file for config_files
+- import_tasks: ../../common/tasks/log_role_start.yml
+
+- name: Debug ansible hostname and home path
+  ansible.builtin.debug:
+    msg: "Detected Hostname: {{ ansible_hostname }}, Detected User: {{ ansible_env.HOME }}"
+
+- name: Retrieve transcrypt password for encrypted repo from Bitwarden
+  ansible.builtin.shell: "bw get item {{ note_id_or_name }}"
+  register: bitwarden_note
+    #no_log: true
+  environment:
+    BW_SESSION: "{{ lookup('env', 'BW_SESSION') }}"
+  changed_when: false
+
+- name: Extract password from the secure note item
+  set_fact:
+    secure_note: "{{ bitwarden_note.stdout | from_json | json_query('notes') }}"
+
+- name: Check if repository directory exists
+  ansible.builtin.stat:
+    path: "{{ repo_dest }}/.git"
+  register: repo_stat
+
+- name: Clone the GitLab repository
+  ansible.builtin.git:
+    repo: "{{ gitlab_repo_url }}"
+    dest: "{{ repo_dest }}"
+    recursive: yes
+    version: main
+  when: not repo_stat.stat.exists
+
+- name: Check if transcrypt is configured for the repo
+  ansible.builtin.shell: |
+    grep -q 'transcrypt' .git/config
+  args:
+    chdir: "{{ repo_dest }}"
+  register: transcrypt_config
+  changed_when: false
+  failed_when: false
+
+- name: Decrypt repo via transcrypt using extracted password
+  ansible.builtin.shell: |
+    transcrypt -c aes-256-cbc -p {{ secure_note }} --yes
+  args:
+    chdir: "{{ repo_dest }}"
+  when: transcrypt_config.rc != 0
+
+- name: Initialize dotfiles via dotbot
+  ansible.builtin.shell: |
+    ./install -c install.config.yaml
+  args:
+    chdir: "{{ repo_dest }}"
+  register: dotfiles_output
+  when: transcrypt_config.rc != 0
+  failed_when: false
+
+- import_tasks: ../../common/tasks/log_role_end.yml

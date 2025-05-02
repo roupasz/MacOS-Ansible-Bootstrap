@@ -1,0 +1,14 @@
+---
+- name: Install homebrew packages, plugins, libraries, fonts, initiate dotfiles and setup ssh, import gpg, and configure MacOS
+  hosts: localhost
+  become: false
+  gather_facts: yes
+
+  roles:
+    - { role: 'defaults', tags: 'def' }
+    - { role: 'homebrew_packages', tags: 'brew' }
+    - { role: 'bitwarden', tags: 'bw' }
+    - { role: 'chezmoi', tags: 'cz' }
+    - { role: 'config_files', tags: 'bw_cfg' }
+    - { role: 'gpg_import', tags: 'bw_gpg' }
+    - { role: 'krew_plugins', tags: 'krew' }

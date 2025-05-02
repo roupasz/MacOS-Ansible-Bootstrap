@@ -1,0 +1,30 @@
+---
+# tasks file for defaults
+- import_tasks: ../../common/tasks/log_role_start.yml
+
+- name: Install MesloLGS fonts
+  block:
+    - name: Ensure the destination directory exists
+      ansible.builtin.file:
+        path: "{{ font_dest_path }}"
+        state: directory
+    
+    - name: Copy files from source to destination if not present
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ font_dest_path }}/{{ item | basename }}"
+        remote_src: true
+        force: false  # Only copy if the file does not exist or is different
+      loop: "{{ lookup('fileglob', font_src_path + '/*', wantlist=True) }}"
+
+- name: Apply MacOS system wide default settings
+  ansible.builtin.shell: "./scripts/defaults.sh"
+
+- name: Copy custom file for input language and spotlight shortcuts
+  ansible.builtin.copy:
+    src: "{{ plist_src_path }}"
+    dest: "{{ plist_dest_srv  }}"
+    force: true
+    mode: '0600'
+
+- import_tasks: ../../common/tasks/log_role_end.yml

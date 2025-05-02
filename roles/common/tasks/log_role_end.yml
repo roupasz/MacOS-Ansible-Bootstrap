@@ -1,0 +1,4 @@
+- name: Print current completed role
+  debug:
+    msg: "Completed role: {{ role_name }}"
+  run_once: true

@@ -1,0 +1,35 @@
+---
+# tasks file for chezmoi
+- import_tasks: ../../common/tasks/log_role_start.yml
+
+- name: Ensure chezmoi is installed via Homebrew
+  ansible.builtin.homebrew:
+    name: chezmoi
+    state: present
+
+- name: Create chezmoi config dir
+  ansible.builtin.file:
+    path: "~/.config/chezmoi"
+    state: directory
+
+- name: Initialize chezmoi
+  ansible.builtin.command: "chezmoi init --verbose {{ chezmoi_init_url }}"
+  when: chezmoi_init_url
+  args:
+    creates: "~/.local/share/chezmoi"
+
+- name: Copy Ansible Vault encrypted checmoi.toml file
+  ansible.builtin.copy:
+    src: files/chezmoi.toml
+    dest: ~/.config/chezmoi/chezmoi.toml
+
+- name: Copy Ansible Vault encrypted age key file
+  ansible.builtin.copy:
+    src: files/key.txt
+    dest: /path/to/key.txt
+
+- name: Initialize chezmoi
+  ansible.builtin.command: "chezmoi apply --force"
+  when: chezmoi_init_url
+
+- import_tasks: ../../common/tasks/log_role_end.yml

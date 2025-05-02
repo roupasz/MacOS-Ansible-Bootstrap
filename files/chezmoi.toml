@@ -1,0 +1,7 @@
+encryption = "age"
+[age]
+    identity = "/path/to/key.txt"
+    recipient = "<recipient_id>"
+
+[data]
+    name = "John Doe"

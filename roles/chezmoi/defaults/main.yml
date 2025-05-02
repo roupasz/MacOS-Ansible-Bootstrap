@@ -1,0 +1,7 @@
+---
+# Specify how to install chezmoi. If "snap", then snapd is used. For all
+# other values, chezmoi is downloaded from github.
+chezmoi_install_method: "download"
+
+# Run chezmoi init with a given URL. You can also specify a Github username.
+chezmoi_init_url: "https://github.com/<user>/repo.git"

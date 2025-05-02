@@ -1,0 +1,21 @@
+---
+# tasks file for bitwarden
+- import_tasks: ../../common/tasks/log_role_start.yml
+
+- name: Retrieve secure note from Bitwarden
+  ansible.builtin.shell: "bw get item {{ note_id_or_name }}"
+  register: bitwarden_note
+    #no_log: true
+    
+## TODO use https://docs.ansible.com/ansible/latest/collections/community/general/bitwarden_lookup.html#notes but needs ansible-galaxy collection install community.general
+- name: Extract token from the secure note item
+  set_fact:
+    secure_note: "{{ bitwarden_note.stdout | from_json | json_query('notes') }}"
+
+- name: Use extracted token to netrc template
+  ansible.builtin.template:
+    src: files/netrc.j2
+    dest: "{{ output_file_path }}"
+    mode: '0600'
+
+- import_tasks: ../../common/tasks/log_role_end.yml

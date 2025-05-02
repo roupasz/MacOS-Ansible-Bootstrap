@@ -1,0 +1,6 @@
+---
+# vars file for bitwarden
+
+# This is the name or ID of the Bitwarden item you want to retrieve.
+note_id_or_name: "<secure_note_name>"
+output_file_path: "/path/to/your/.netrc"

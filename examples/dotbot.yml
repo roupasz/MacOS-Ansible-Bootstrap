@@ -1,0 +1,23 @@
+---
+# tasks file for dotbot execution
+- name: Check if folder is present and run command
+  hosts: localhost
+  tasks:
+    - name: Check for the presence of the folder
+      ansible.builtin.stat:
+        path: /path/to/repo
+      register: folder_stat
+
+    - name: Run a command if the folder exists
+      block:
+        - name: Execute the command
+          ansible.builtin.command:
+            cmd: "./install -c install.config.yaml"
+          args:
+            chdir: /path/to/repo
+      when: folder_stat.stat.exists and folder_stat.stat.isdir
+
+    - name: Fail if the folder does not exist
+      ansible.builtin.fail:
+        msg: "The required folder /path/to/folder is missing."
+      when: not (folder_stat.stat.exists and folder_stat.stat.isdir)

@@ -1,0 +1,34 @@
+---
+# tasks file for bitwarden
+# source examples/.env
+- name: Retrieve and use Bitwarden secrets
+  hosts: localhost
+  gather_facts: no
+  vars:
+    # This is the name or ID of the Bitwarden item you want to retrieve.
+    note_id_or_name: "<secure_note_name>"
+    output_file_path: "/path/to/your/netrc"
+
+  tasks:
+    - name: Retrieve secure note from Bitwarden
+      ansible.builtin.shell: "bw get item {{ note_id_or_name }}"
+      register: bitwarden_note
+        #no_log: true
+    
+    ## TODO use https://docs.ansible.com/ansible/latest/collections/community/general/bitwarden_lookup.html#notes but needs ansible-galaxy collection install community.general
+    - name: Extract note from the secure note item
+      set_fact:
+        # extract only part of the note for security
+        secure_note: "{{ bitwarden_note.stdout | from_json | json_query('notes') | regex_replace('^(.{2}).*', '\\1') }}"
+
+    - name: Use note token to output file
+      ansible.builtin.template:
+        src: files/netrc.j2
+        dest: "{{ output_file_path }}"
+        mode: '0600'
+      #Set use_secure_note: true in vars or via --extra-vars "use_secure_note=true" if you want to run this task
+      when: use_secure_note | default(false) | bool
+
+    - name: Output the retrieved password (for debugging)
+      debug:
+        msg: "Retrieved Transcrypt password: {{ secure_note }}"

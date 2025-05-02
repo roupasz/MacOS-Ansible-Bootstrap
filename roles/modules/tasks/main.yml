@@ -1,0 +1,7 @@
+---
+# tasks file for modules
+- name: Installing Python Modules
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items: '{{ python_modules }}'

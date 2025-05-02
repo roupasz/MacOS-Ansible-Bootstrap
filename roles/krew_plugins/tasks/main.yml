@@ -1,0 +1,51 @@
+---
+# tasks file for krew plugins
+- import_tasks: ../../common/tasks/log_role_start.yml
+
+- name: Ensure kubectl is installed
+  homebrew:
+    name: kubectl
+    state: present
+
+- name: Install krew
+  shell: |
+    set -x
+    cd "$(mktemp -d)" &&
+    OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+    ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+    KREW="krew-${OS}_${ARCH}" &&
+    curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+    tar zxvf "${KREW}.tar.gz" &&
+    ./"${KREW}" install krew
+  args:
+    executable: /bin/bash
+  register: krew_install_result
+  ignore_errors: true
+
+- name: Debug krew installation result
+  debug:
+    var: krew_install_result
+
+# Should be present as another script is symlinking .zshrc and other config files
+- name: Add krew to PATH
+  lineinfile:
+    path: "~/.zshrc"
+    line: 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"'
+    state: present
+  when: krew_install_result is succeeded
+  register: zshrc_modified
+  # Notify a handler to source .zshrc (optional)
+  notify: source zshrc
+
+- name: Install krew plugins (with explicit PATH)
+  command: "{{ ansible_env.HOME }}/.krew/bin/kubectl-krew install {{ item }}"
+  loop: "{{ krew_plugins }}"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_env.HOME }}/.krew/bin"
+  when: krew_install_result is succeeded
+  register: krew_plugin_result
+  retries: 2
+  delay: 5
+  until: krew_plugin_result is succeeded
+
+- import_tasks: ../../common/tasks/log_role_end.yml

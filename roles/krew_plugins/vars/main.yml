@@ -1,0 +1,11 @@
+---
+# vars/main.yml
+
+krew_plugins:
+  - tree
+  - foreach
+  - view-secret
+  - view-allocations
+  - browse-pvc
+  - neat
+  - node-shell

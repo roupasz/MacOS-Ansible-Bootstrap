@@ -1,0 +1,8 @@
+---
+# defaults/main.yml
+# change to false if you don't want to install hombrew
+install_homebrew_if_missing: true
+# change to true if you want to upgrade packages
+upgrade_homebrew_packages: false
+# change to true for first boot
+install_cask_bootsrap_packages: false

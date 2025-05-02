@@ -1,0 +1,77 @@
+---
+# tasks file for hombre_packages
+- import_tasks: ../../common/tasks/log_role_start.yml
+
+- name: Ensuring homebrew is innstalled
+  stat:
+    path: /opt/homebrew/bin/brew
+  register: homebrew_check
+
+- name: Fail ff Homebrew is not installed and install_homebrew_if_missing is false
+  fail:
+    msg: Homebrew is missing...Install from http://brew.sh/
+  when:
+    - not homebrew_check.stat.exists
+    - not install_homebrew_if_missing
+
+- name: Installing homebrew
+  shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  when:
+    - not homebrew_check.stat.exists
+    - install_homebrew_if_missing
+
+- name: Updating homebrew
+  homebrew:
+    update_homebrew: true
+  when: homebrew_check.stat.exists
+
+- name: Tap necessary repositories
+  homebrew_tap:
+    name: "{{ item }}"
+  loop:
+    - derailed/k9s
+    - hashicorp/tap
+    - hidetatz/tap
+    - homeport/tap
+  when: homebrew_check.stat.exists
+
+- name: Upgrading homebrew packages
+  homebrew:
+    upgrade_all: "{{ upgrade_homebrew_packages }}"
+  register: result
+  until: result is successful
+  when:
+    - homebrew_check.stat.exists
+    - upgrade_homebrew_packages
+
+- name: Installing homebrew cask packages
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ brew_cask_packages }}"
+  register: result
+  until: result is successful
+  when: homebrew_check.stat.exists
+  ignore_errors: true
+
+- name: Install first boot cask packages
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ brew_cask_bootsrap_packages }}"
+  register: result
+  until: result is successful
+  when: install_cask_bootsrap_packages | bool  # Conditional on the flag being true
+  ignore_errors: true
+
+- name: Installing homebrew packages
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ brew_packages }}"
+  register: result
+  until: result is successful
+  when: homebrew_check.stat.exists
+  ignore_errors: true
+
+- import_tasks: ../../common/tasks/log_role_end.yml

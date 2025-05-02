@@ -1,0 +1,7 @@
+# fint paths
+font_src_path: "files/fonts"
+font_dest_path: "~/Library/Fonts"
+
+# settings paths
+plist_src_path: "files/settings/com.apple.symbolichotkeys.plist"
+plist_dest_srv: "~/Library/Preferences/com.apple.symbolichotkeys.plist"

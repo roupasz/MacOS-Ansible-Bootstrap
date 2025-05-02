@@ -1,0 +1,128 @@
+---
+# tasks file for gpg import
+- name: Check and Import GPG Keys
+  hosts: localhost
+  gather_facts: yes
+  vars:
+   gpg_keys: >-
+     {{
+       ['B93D4C791C2183BC76', 'C2183BC76B93D4C791'] if ansible_hostname.startswith('T') else ['C2183BC76B93D4C791']
+     }}
+   # uncomment for bitwarden troubleshooting + source examples/.env
+   #note_id_or_name: "<secure_note_name>"
+   gitlab_repo_url: "https://github.com/<user>/<repo>.git"
+   repo_dest: "{{ ansible_env.HOME }}/path/to/<repo>"
+   transcrypt_password: "<password>"
+
+  tasks:
+
+    # uncomment for bitwarden troubleshooting
+    #- name: Retrieve transcrypt password for encrypted repo from Bitwarden
+    #  ansible.builtin.shell: "bw get item {{ note_id_or_name }}"
+    #  register: bitwarden_note
+    #    #no_log: true
+    #  environment:
+    #    BW_SESSION: "{{ lookup('env', 'BW_SESSION') }}"
+    #  changed_when: false
+
+    - name: Extract note from the secure note item
+      set_fact:
+        # uncomment for bitwarden troubleshooting
+        #secure_note: "{{ bitwarden_note.stdout | from_json | json_query('notes') }}"
+        secure_note: "{{ transcrypt_password }}"
+
+    - name: Check if repository directory exists
+      ansible.builtin.stat:
+        path: "{{ repo_dest }}/.git"
+      register: repo_stat
+
+    - name: Clone the GitLab repository
+      ansible.builtin.git:
+        repo: "{{ gitlab_repo_url }}"
+        dest: "{{ repo_dest }}"
+        version: main
+      when: not repo_stat.stat.exists
+
+    - name: Check if Transcrypt is configured in .git/config
+      ansible.builtin.shell: |
+        grep -q 'transcrypt' .git/config
+      args:
+        chdir: "{{ repo_dest }}"
+      register: transcrypt_config
+      changed_when: false
+      failed_when: false
+
+    - name: Unlock Transcrypt encryption
+      ansible.builtin.shell: |
+        transcrypt -c <CIPHER> -p {{ secure_note }} --yes
+      args:
+        chdir: "{{ repo_dest }}"
+      when: transcrypt_config.rc != 0
+
+#    - name: Set GPG keys based on hostname
+#      ansible.builtin.set_fact:
+#        gpg_keys: "{{ ['B93D4C791C2183BC76', 'C2183BC76B93D4C791'] if ansible_hostname.startswith('T') else ['C2183BC76B93D4C791'] }}"
+
+# In case we want to grep the emails , but could be unstable
+#    - name: Set GPG keys based on hostname
+#      ansible.builtin.set_fact:
+#        gpg_keys: "{{ ['johndoe@work.com', 'johndoe@personal.com'] if ansible_hostname.startswith('T') else ['johndoe@personal.com'] }}"
+
+# Debugging tasks
+#    - name: Debug selected GPG keys
+#      ansible.builtin.debug:
+#        msg: "Keys to be imported: {{ gpg_keys }}"
+
+    - name: Check if GPG keys exist
+      ansible.builtin.shell:
+        cmd: "gpg --list-keys | grep '{{ item }}' || true"
+      register: have_key
+      failed_when: false
+      changed_when: false
+      loop: "{{ gpg_keys }}"
+
+# Debugging tasks
+#    - name: Debug GPG check result
+#      ansible.builtin.debug:
+#        var: have_key
+
+    - name: Extract existing GPG keys
+      ansible.builtin.set_fact:
+        existing_keys: "{{ have_key.results | map(attribute='stdout') | map('trim') | map('regex_replace', '^.*([A-F0-9]{16})$', '\\1') | list }}"
+        # In case we want to grep the emails , but could be unstable
+        #existing_keys: "{{ have_key.results | map(attribute='stdout_lines') | flatten | map('regex_replace', '^.*<(.*)>$', '\\1') | list }}"
+
+    - name: Debug existing GPG keys
+      ansible.builtin.debug:
+        msg: "Already filtered existing keys: {{ existing_keys }}"
+
+    - name: Debug individual key existence
+      ansible.builtin.debug:
+        msg: "Checking if key {{ item }} exists in {{ existing_keys }}"
+      loop: "{{ gpg_keys }}"
+
+    - name: Debug the GPG import command
+      ansible.builtin.debug:
+        msg: "Would run: gpg --import {{ repo_dest }}/path/to/gpg/keys/{{ item }}.asc"
+      when: "item not in existing_keys"
+      loop: "{{ gpg_keys }}"
+
+    - name: Prompt user before importing GPG keys
+      ansible.builtin.pause:
+        prompt: "Do you want to import the missing GPG keys? (y)/(n)"
+      register: user_input
+
+    - name: Debug user response
+      ansible.builtin.debug:
+        msg: "User chose: {{ user_input.user_input | lower }}"
+
+    - name: Import missing GPG keys
+      ansible.builtin.shell:
+        cmd: "echo gpg --import {{ repo_dest }}/path/to/gpg/keys/{{ item }}.asc"
+      when: "user_input.user_input | lower in ['yes', 'y'] and item not in existing_keys"
+      loop: "{{ gpg_keys }}"
+
+    - name: Skip GPG import if user said 'no' or if keys are already present
+      ansible.builtin.debug:
+        msg: "Skipping GPG key import as per user request or because keys are already present."
+      when: "user_input.user_input | lower != ['yes', 'y']"
