@@ -116,4 +116,4 @@ Contributions and suggestions are welcome! If you spot something that could be i
 
 I'm a DevOps Engineer specializing in hybrid infrastructure architecture and implementation. I design, deploy, and optimize systems across both on-premise environments and cloud platforms, focusing on automation, CI/CD pipelines, and infrastructure as code to create scalable, resilient solutions.
 
-[Check out my Blog](https://myhomelab.gr/)✍️
+[Check out my Blog](https://myhomelab.gr/) ✍️
