@@ -18,7 +18,7 @@
 
 ## 📝 Overview
 
-A collection of ansible roles which install macOS related packages,dependencies, plugins, fonts and system settings.
+A set of Ansible roles that automates the package installation and configuration of macOS applications, dependencies, plugins, fonts, and system settings.
 
 ## 🚀 New System Bootstrap
 
@@ -47,7 +47,7 @@ In case of full installation, roles are executed in the following order:
 - gpg_import
 - krew_plugins
 
-Find a README file inside each role.
+Find a README file inside each roles folder.
 
 ### Ansible Playbook Usage
 
@@ -77,7 +77,7 @@ Include the role in your playbook:
 
 ## 🛡️ Security 
 
-In case you want to fork, it is strongly recommended that you encrypt files like key.txt and any other file that holds sensitive info. I haven't done it here in order to show you what a file would like like in case you want to follow the same setup.
+In case you want to fork, it is strongly recommended that you encrypt files like key.txt and any other file that holds sensitive info. I haven't done it here in order to show you what a file would like before encryption, in case you want to follow the same setup.
 
 Check [ansible-vault](https://docs.ansible.com/ansible/latest/vault_guide/vault_encrypting_content.html) for more details.
 
@@ -87,13 +87,14 @@ In case you do have a separate repo for your dotfiles, gpg keys etc , then updat
 
 This procedure is heavily depended to Bitwarden in order to retrieve tokens used during the playbook runtime. If you intend to use this only for package installation, then disable all roles except `homebrew_packages`.
 
-For more customization details, check README files found in each role (wip).
+For more customization details, check README files found in each roles folder (wip).
 
 ## 🐞 Issues / 📝 TODOs
 
 > [!NOTE] 
 > Add an execution diagram flow
 
+* Include usage examples and dependencies in each role's README files.
 * bootstrap script may need some more sanity checks.
 * merge similar tasks, like cloning and decrypting repos used during the fresh installation, in one role.
 * `gpg_import` role is importing keys even if the keys are present.
