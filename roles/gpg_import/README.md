@@ -23,11 +23,6 @@ A valid Bitwarden login session must be established before this role runs. This 
 Role Variables
 --------------
 
-`output_file_path: "/path/to/your/.netrc"` : This is the path where .netrc.j2 will be deployed to. Usually needs to be under home directory.\
-`note_id_or_name: "<secure_note_name>"` : The name of the Bitwarden Secure Note that holds the token used for repo cloning.\
-`gitlab_repo_url: "https://github.com/<user>/repo.git"` : The repo that holds the config/dofiles based on Dotbot tool.\
-`repo_dest: "{{ ansible_env.HOME }}/path/to/repo"` : This is the path where the repo will be cloned to and initialized from.
-
 `gpg_keys: <key1, key2>` : The list of gpg key fingerprints that will imported based on the hostname. The hostname is added, in order to be able to add specific gpg keys to specific machines and distinguish from work and personal.\
 `note_id_or_name: "<secure_note_name>"` : The name of the Bitwarden Secure Note that holds the token used for repo cloning.\
 `gitlab_repo_url: "https://github.com/<user>/repo.git"` : The repo that holds the encrypted gpg keys.\

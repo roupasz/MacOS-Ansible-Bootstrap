@@ -7,7 +7,7 @@
 chezmoi
 =========
 
-This `chezmoi` Ansible role, is used to install [chezmoi](https://www.chezmoi.io/) dotfile manager which handles templated (an not only) config files. It needs `--ask-vault-pass` because the `files/key` used by `chezmoi` should be encrypted, personally I use `ansible-vault` but for visibility reasons in this case, the file un encrypted for better understanding of how it should look like after generated.
+This `chezmoi` Ansible role, is used to install [chezmoi](https://www.chezmoi.io/) dotfile manager which handles templated (an not only) config files. It needs `--ask-vault-pass` because the `files/key` used by `chezmoi` should be encrypted, personally I use `ansible-vault` but for visibility reasons in this case, the file is unencrypted for better understanding of how it should look like after generated.
 
 Due to the fact that I'm working in different workstations, I wanted a way to install different dotfiles for my work and personal workstation.\
 For example, I wanted to have my `.terraformrc` in my work machine but not for my personal one. Or I wanted my `.netrc.j2` to have different entries for different machines.
