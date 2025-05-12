@@ -1,6 +1,5 @@
 - [Role Name](#role-name)
   - [Prerequisites:](#prerequisites)
-  - [Prerequisites:](#prerequisites-1)
   - [Role Variables](#role-variables)
   - [Dependencies](#dependencies)
 
@@ -19,14 +18,8 @@ Prerequisites:
 
 A valid Bitwarden login session must be established before this role runs. This is typically handled automatically by `bootstrap.sh` during a full execution, or manually via sourcing `examples/.env` when troubleshooting.
 
-Prerequisites:
-------------
-
-A valid Bitwarden login session must be established before this role runs. This is typically handled automatically by `bootstrap.sh` during a full execution, or manually via sourcing `examples/.env` when troubleshooting.
-
 Role Variables
 --------------
-
 
 `output_file_path: "/path/to/your/.netrc"` : This is the path where .netrc.j2 will be deployed to. Usually needs to be under home directory.
 
