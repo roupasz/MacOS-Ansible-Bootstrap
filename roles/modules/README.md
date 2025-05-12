@@ -1,7 +1,7 @@
-modules (wip)
+Role Name (wip)
 =========
 
-Role that will to install mac os programming language related modules, libraries and dependenices.
+This `modules` Asnible Role, is handling the installation of python modules (WIP)
 
 Requirements
 ------------

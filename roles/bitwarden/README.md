@@ -1,38 +1,43 @@
+- [Role Name](#role-name)
+  - [Prerequisites:](#prerequisites)
+  - [Role Variables](#role-variables)
+  - [Dependencies](#dependencies)
+  - [Execution](#execution)
+
+
 Role Name
 =========
 
-A brief description of the role goes here.
+This `default` Ansible role, is required by the setup script to enable cloning of specific repositories as part of the bootstrap process.
 
-Requirements
+The role retrieves the necessary token from a Bitwarden Secure Note and stores it as a variable. This token is then injected into the templated `files/netrc.j2` file, which is subsequently moved to the appropriate location.
+
+Prerequisites:
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+A valid Bitwarden login session must be established before this role runs. This is typically handled automatically by `bootstrap.sh` during a full execution, or manually via sourcing `examples/.env` when troubleshooting.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+`note_id_or_name: "<secure_note_name>"` : The name of the Bitwarden Secure Note that holds the token used for repo cloning.
+`output_file_path: "/path/to/your/.netrc"` : This is the path where .netrc.j2 will be deployed to. Usually needs to be under home directory.
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+User should have a Github/Gitlab Token with appropriate permissions.
 
-Example Playbook
+Execution
 ----------------
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Execute via 
+```shell
+./bootstrap.sh --tags bw
+```
+or
+```shell
+ansible-playbook main_playbook.yml --tags "bw"
+```

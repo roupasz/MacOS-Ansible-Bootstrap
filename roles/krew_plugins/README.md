@@ -1,16 +1,18 @@
-krew_plugins
+Role Name
 =========
 
-Role that will to install mac os kubectl, krew and related plugins.
+The `krew_plgins` Ansible Role, is installing a list of krew plugins that that should be present in every one of my machines.
+
+In more detail, it installs `kubectl` and then `krew` before installing the relavant plugins.
 
 Requirements
 ------------
-n/a
+`Kubectl` should be present.
 
 Variables
 --------------
 
-- `krew_plugins` : A list of Krew plugins to install.
+- `krew_plugins` : A list of Krew plugins to be installed.
 
 Paramaters
 --------------

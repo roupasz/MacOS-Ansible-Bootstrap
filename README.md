@@ -5,6 +5,7 @@
 
 - [📝 Overview](#-overview)
 - [🚀 New System Bootstrap](#-new-system-bootstrap)
+- [Boostrap Execution Flow](#boostrap-execution-flow)
 - [🖥️ Bootstrap Script Usage](#️-bootstrap-script-usage)
   - [Order of role execution](#order-of-role-execution)
   - [Ansible Playbook Usage](#ansible-playbook-usage)
@@ -25,7 +26,10 @@ A set of Ansible roles that automates the package installation and configuration
 `bootstrap.sh` prepares the system by installing essential tools (such as Homebrew, Ansible, Bitwarden CLI, etc.) required by the Ansible roles.
 Ansible roles then handle package installation, global settings configuration,font installation and dotfile initialization, using both Chezmoi (for templated dotfiles) and Dotbot (for standard dotfiles).
 
-is used to install packages (ex. homebrew, ansible, bitwarden-cli etc) required by the ansible roles which in turn will install packages, configure global settings, initialize both templated dotfiles via Chezmoi and normal ones via Dotbot. 
+It is used to install packages (ex. homebrew, ansible, bitwarden-cli etc) required by the ansible roles which in turn will install packages, configure global settings, initialize both templated dotfiles via Chezmoi and normal ones via Dotbot. 
+
+## Boostrap Execution Flow
+<a><img align="center" src="./src/diagrams/bootstrap_flow.png" alt="roupasz"></a>
 
 ## 🖥️ Bootstrap Script Usage
 
@@ -90,9 +94,6 @@ This procedure is heavily depended to Bitwarden in order to retrieve tokens used
 For more customization details, check README files found in each roles folder (wip).
 
 ## 🐞 Issues / 📝 TODOs
-
-> [!NOTE] 
-> Add an execution diagram flow
 
 * Include usage examples and dependencies in each role's README files.
 * bootstrap script may need some more sanity checks.
