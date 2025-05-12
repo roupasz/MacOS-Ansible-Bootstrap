@@ -29,7 +29,7 @@ Ansible roles then handle package installation, global settings configuration,fo
 It is used to install packages (ex. homebrew, ansible, bitwarden-cli etc) required by the ansible roles which in turn will install packages, configure global settings, initialize both templated dotfiles via Chezmoi and normal ones via Dotbot. 
 
 ## Boostrap Execution Flow
-<a><img align="center" src="./src/diagrams/bootstrap_flow.svg" alt="roupasz"></a>
+<a><img align="center" src="./src/diagrams/bootstrap_flow.png" alt="roupasz"></a>
 
 ## 🖥️ Bootstrap Script Usage
 
