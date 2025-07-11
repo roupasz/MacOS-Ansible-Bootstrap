@@ -5,7 +5,7 @@
 - [🔍 Overview](#-overview)
 - [📝 Prerequisites](#-prerequisites)
 - [🚀 New System Bootstrap](#-new-system-bootstrap)
-- [📐 Boostrap Execution Flow](#-boostrap-execution-flow)
+- [📐 Bootstrap Execution Flow](#-bootstrap-execution-flow)
 - [🖥️ Bootstrap Script Usage](#️-bootstrap-script-usage)
   - [Full Installation](#full-installation)
   - [Partial Installation](#partial-installation)
@@ -45,7 +45,7 @@ It also installs [Ultimate Vimrc](https://github.com/amix/vimrc) and [oh-my-zsh]
 
 Ansible roles then handle package installation, global settings configuration,font installation, gpg key importing and dotfile initialization, using both Chezmoi (for templated dotfiles) and Dotbot (for standard dotfiles). This [post](https://myhomelab.gr/automation/2025/06/26/dotfiles-management.html) explains why I'm using two dotfile managers.
 
-## 📐 Boostrap Execution Flow
+## 📐 Bootstrap Execution Flow
 <a><img align="center" src="./src/diagrams/bootstrap_flow.png" alt="roupasz"></a>
 
 ## 🖥️ Bootstrap Script Usage
