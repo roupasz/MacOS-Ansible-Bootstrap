@@ -131,7 +131,7 @@ usage() {
   echo "                            WARNING                                    "
   echo "In a fresh MacOS installation, run first with --install-packages option."
   echo "              eg  ./bootstrap --install-packages                       "
-  echo "   and choose whether to continue or stop the bootstrap process        " 
+  echo "   and choose whether to continue or stop the bootstrap process        "
   echo "-----------------------------------------------------------------------"
   echo -en "${NC}"
   echo "-----------------------------------------------------------------------"
@@ -175,6 +175,7 @@ multiline_string="
 - Optional applications that can be installed per need:
         * CleanShotX : Paid https://cleanshot.com/
         * Ice Menu Bar Manager : Free https://icemenubar.app/
+        * Let It Snow Desktop : Free App Store
         * <add more>
 - Copy major folders from your backup (ex. .kube, .gnupg , .config etc)
 - Install DisplayManager related software.
@@ -302,7 +303,7 @@ if [ "$INSTALL_ONLY" = true ]; then
   else
     log "Oh My Zsh is already installed"
   fi
-  
+
   log "Do you want to continue with the bootsrap process ? (y/n)"
   read -p "> " continue_bootstrap
   if [[ "$continue_bootstrap" =~ ^[Nn]$ ]]; then
