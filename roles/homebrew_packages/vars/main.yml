@@ -11,6 +11,7 @@ brew_cask_bootsrap_packages:
   - firefox
   - rectangle
   - ente-auth
+  - miro
 
 brew_packages:
   - zsh
