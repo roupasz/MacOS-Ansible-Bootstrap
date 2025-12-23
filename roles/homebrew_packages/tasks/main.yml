@@ -33,6 +33,7 @@
     - hashicorp/tap
     - hidetatz/tap
     - homeport/tap
+    - updatest/tap https://github.com/updatest/tap.git
   when: homebrew_check.stat.exists
 
 - name: Upgrading homebrew packages

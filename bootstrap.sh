@@ -179,6 +179,7 @@ multiline_string="
         * <add more>
 - Copy major folders from your backup (ex. .kube, .gnupg , .config etc)
 - Install DisplayManager related software.
+- Software licenses (cleanshotx, updatest etc) can be found in OneDrive dmg backup or in hotmail.
 "
 echo "$multiline_string"
 echo -en "${NC}"

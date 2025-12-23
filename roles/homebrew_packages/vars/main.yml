@@ -12,6 +12,7 @@ brew_cask_bootsrap_packages:
   - rectangle
   - ente-auth
   - miro
+  - updatest@beta
 
 brew_packages:
   - zsh
