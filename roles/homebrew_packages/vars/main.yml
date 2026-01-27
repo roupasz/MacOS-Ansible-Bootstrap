@@ -53,6 +53,7 @@ brew_packages:
   - python
   - zsh
   - zsh-syntax-highlighting
+  - zoxide
   - sqlcmd
   - onefetch
   - kubectl
